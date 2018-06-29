@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 7179713f0f1a7564da23f01b4726c998
+timeCreated: 1530254376
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Player: {instanceID: 0}
+  - enemyOne: {instanceID: 0}
+  - enemyTwo: {instanceID: 0}
+  - ciudada: {instanceID: 0}
+  - cargador: {instanceID: 0}
+  - bullet: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
