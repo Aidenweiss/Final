@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Manager : MonoBehaviour {
 
@@ -15,8 +16,9 @@ public class Manager : MonoBehaviour {
     public GameObject enemyOne;
     GameObject enemyOneClone;
 
-    public GameObject enemyTwo;
-    GameObject enemyTwoClone;
+    [SerializeField]
+    GameObject enemyTwo;
+   
 
     public GameObject ciudada;
     GameObject ciudadaClone;
@@ -25,6 +27,18 @@ public class Manager : MonoBehaviour {
     
     public GameObject cargador;
     GameObject cargadorClone;
+
+    public int contCiu;
+    public int contE1;
+    public int contE2;
+
+    public Text NC;
+    public Text NE1;
+    public Text NE2;
+    public Text NL;
+
+    public Text lose;
+    public Text win;
 
     IEnumerator SpawnCharger()
     {
@@ -43,7 +57,7 @@ public class Manager : MonoBehaviour {
            citizenSpawn();
         }
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 5; i++)
         {
             enemy1Spawn();
         }
@@ -59,7 +73,21 @@ public class Manager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-       
+        NC.text = contCiu.ToString();
+        NE1.text = contE1.ToString();
+        NE2.text = contE2.ToString();
+        NL.text = FindObjectOfType<Player>().lifes.ToString();
+
+        if (FindObjectOfType<Player>().Lose == true)
+        {
+            lose.enabled = true;
+            Time.timeScale = 0;
+        }
+        if (contE1 + contE2 == 0)
+        {
+            win.enabled = true;
+            Time.timeScale = 0;
+        }
      
     }
     public void spawnCharger()
@@ -83,11 +111,12 @@ public class Manager : MonoBehaviour {
         Camera.main.gameObject.AddComponent<FPSAim>();
 
         Vector3 pos1 = new Vector3();
-        pos1.x = Random.Range(-10, 10);
+        pos1.x = Random.Range(-20, 20);
         pos1.y = 1f;
-        pos1.z = Random.Range(-10, 10);
+        pos1.z = Random.Range(-20, 20);
         playerClone.transform.position = pos1;
 
+       
 
         playerClone.tag = "Player";
         playerClone.AddComponent<Player>();
@@ -100,15 +129,17 @@ public class Manager : MonoBehaviour {
         ciudadaClone = Instantiate(ciudada, transform.position, Quaternion.identity);
 
         Vector3 pos2 = new Vector3();
-        pos2.x = Random.Range(-10, 10);
+        pos2.x = Random.Range(-20, 20);
         pos2.y = 1f;
-        pos2.z = Random.Range(-10, 10);
+        pos2.z = Random.Range(-20, 20);
         ciudadaClone.transform.position = pos2;
 
         ciudadaClone.tag = "Ciudadano";
         ciudadaClone.AddComponent<Citizen>();
         Rigidbody rgbdy2 = ciudadaClone.AddComponent<Rigidbody>();
         rgbdy2.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
+        contCiu++;
     }
 
     public void enemy1Spawn()
@@ -116,28 +147,34 @@ public class Manager : MonoBehaviour {
         enemyOneClone = Instantiate(enemyOne, transform.position, Quaternion.identity);
 
         Vector3 pos3 = new Vector3();
-        pos3.x = Random.Range(-10, 10);
+        pos3.x = Random.Range(-20, 20);
         pos3.y = 1f;
-        pos3.z = Random.Range(-10, 10);
+        pos3.z = Random.Range(-20, 20);
         enemyOneClone.transform.position = pos3;
 
         enemyOneClone.tag = "Enemy1";
         enemyOneClone.AddComponent<Enemy1>();
         Rigidbody rgbdy3 = enemyOneClone.AddComponent<Rigidbody>();
         rgbdy3.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
+        contE1++;
     }
     public void enemy2Spawn()
     {
+        GameObject enemyTwoClone;
+        
         enemyTwoClone = Instantiate(enemyTwo, transform.position, Quaternion.identity);
 
         Vector3 pos4 = new Vector3();
-        pos4.x = Random.Range(-10, 10);
+        pos4.x = Random.Range(-20, 20);
         pos4.y = 1f;
-        pos4.z = Random.Range(-10, 10);
+        pos4.z = Random.Range(-20, 20);
         enemyTwoClone.transform.position = pos4;
 
         enemyTwoClone.tag = "Enemy2";
         enemyTwoClone.AddComponent<Enemy2>();
         Rigidbody rgbdy4 = enemyTwoClone.AddComponent<Rigidbody>();
+
+        contE2++;
     }
 }

@@ -1,17 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Player : Manager {
+public class Player : MonoBehaviour {
 
-    PlayerE playerInfo;
-    public bool empty = true;
+    public int lifes;
+    public bool Lose = false;
+   
   
 
 	// Use this for initialization
 	void Start ()
     {
-        playerInfo.lifes = 3;
+        lifes = 3;
 	}
 	
 	// Update is called once per frame
@@ -49,12 +51,24 @@ public class Player : Manager {
 
         if (colision.gameObject.tag == "Ammo")
         {
-            empty = false;
+            FindObjectOfType<Bullet>().ammo = 10;
+            Debug.Log("Recargaste las balas");
         }
 
         if (colision.gameObject.tag == "Enemy1" || colision.gameObject.tag == "Enemy2")
         {
-            playerInfo.lifes--;
+            lifes--;
+
+            Vector3 pos1 = new Vector3();
+            pos1.x = Random.Range(-20, 20);
+            pos1.y = 1f;
+            pos1.z = Random.Range(-20, 20);
+            gameObject.transform.position = pos1;
+
+            if(lifes == 0)
+            {
+                Lose = true;
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ammo : Player
+public class Ammo : MonoBehaviour
 {
 
 	// Use this for initialization
@@ -18,7 +18,7 @@ public class Ammo : Player
     {
         if(collision.gameObject.tag == "Player")
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
