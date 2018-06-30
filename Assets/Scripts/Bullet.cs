@@ -5,12 +5,13 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField]
-    public int ammo;
-    public GameObject bullet;
+    public int ammo; //Variable que guarda la cantidad de municion.
+
+    public GameObject bullet; //Variables para instanciacion de las balas.
     GameObject bulletClone;
 
-    private float cadencia;
-    private float Force;
+    private float cadencia; //Variable que guarda el tiempo de cadencia entre disparos.
+    private float Force; //Variable que guarda la fuerza aplicada a las balas.
   
 	// Use this for initialization
 	void Start ()
@@ -24,18 +25,18 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (cadencia <= 0.5f)
+        if (cadencia <= 0.5f) //Condicional para evitar spam de disparos.
         {
             cadencia += Time.deltaTime;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) //Condicional para disparar.
         {
             if (ammo > 0)
             {
                 if (cadencia >= 0.5f)
                 {
-                    Shoot();
+                    Shoot(); //Llamada al metodo de disparar.
                     ammo--;
                     cadencia = 0;
                 }
@@ -48,7 +49,7 @@ public class Bullet : MonoBehaviour
         }
 
     }
-    public void Shoot()
+    public void Shoot() //Metodo encargado de instanciar, aplicar fuerza a las balas y finalmente destruirlas.
     {
         
         bulletClone = Instantiate(bullet, transform.position, transform.rotation);

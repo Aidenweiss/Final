@@ -14,7 +14,10 @@ public class FPSmove : FPSAim //Herencia del script FPSAim
 }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+       
+
         if (Input.GetKey(KeyCode.W)) //Control de direccion para moverse hacia adelante.
         {
              transform.position += transform.forward*playerInfo.playerSpeed;

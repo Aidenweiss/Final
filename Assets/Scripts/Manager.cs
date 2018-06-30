@@ -5,92 +5,93 @@ using UnityEngine.UI;
 
 public class Manager : MonoBehaviour {
 
-    PlayerE player;
+    PlayerE player; //Llamada a las estructuras.
     FirstEnemyE fEnemy;
     SecondEnemyE sEnemy;
     CiudadanoE citizen;
 
-    public GameObject Player;
+    public GameObject Player; //Variables para instanciacion del jugador.
     GameObject playerClone;
 
-    public GameObject enemyOne;
+    public GameObject enemyOne; //Variables para instanciacion del primer tipo de enemigo.
     GameObject enemyOneClone;
 
     [SerializeField]
-    GameObject enemyTwo;
-   
+    GameObject enemyTwo; //Variables para instanciacion del segundo tipo de enemigo.
 
-    public GameObject ciudada;
+
+    public GameObject ciudada; //Variables para instanciacion de los ciudadanos.
     GameObject ciudadaClone;
 
-    int talk;
+    int talk; //Variable que controla la conversacion heroe - ciudadano.
     
-    public GameObject cargador;
+    public GameObject cargador;//Variables para instanciacion de los cargadores.
     GameObject cargadorClone;
 
-    public int contCiu;
+    public int contCiu; //Variables que guardan la cantidad de ciudadanos y enemigos.
     public int contE1;
     public int contE2;
 
-    public Text NC;
+    public Text NC; //Variables que controlan el texto de las cantidades de enemigos, ciudadanos y vidas.
     public Text NE1;
     public Text NE2;
     public Text NL;
 
-    public Text lose;
+    public Text lose; //Variables que controlan la activacion de los mensajes de ganar o perder.
     public Text win;
 
-    IEnumerator SpawnCharger()
+  
+    IEnumerator SpawnCharger() //Corrutina que controla la creacion de cargadores.
     {
-        yield return new WaitForSeconds(10);
-        spawnCharger();
+        yield return new WaitForSeconds(20);
+        spawnCharger(); //Llamada al metodo de creacion de cargadores.
         StartCoroutine(SpawnCharger());
     }
 
     // Use this for initialization
     void Start ()
     {
-        heroSpawn();
+        heroSpawn(); //Llamada al contructor del heroe.
 
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 5; i++) //Ciclo que se encarga de crear los ciudadanos.
         {
            citizenSpawn();
         }
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++) //Ciclo que se encarga de crear el primer tipo de enemigos.
         {
             enemy1Spawn();
         }
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++) //Ciclo que se encarga de crear el segundo tipo de enemigos.
         {
             enemy2Spawn();   
         }
 
-        StartCoroutine(SpawnCharger());
+        StartCoroutine(SpawnCharger()); //Inicializacion de la corrutina que crea cargadores.
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        NC.text = contCiu.ToString();
+        NC.text = contCiu.ToString(); //Bloque de codigo que modifica los valores de los textos en el canvas.
         NE1.text = contE1.ToString();
         NE2.text = contE2.ToString();
         NL.text = FindObjectOfType<Player>().lifes.ToString();
 
-        if (FindObjectOfType<Player>().Lose == true)
+        if (FindObjectOfType<Player>().Lose == true) //Condicional para activar el mensaje de Perdiste.
         {
             lose.enabled = true;
-            Time.timeScale = 0;
+       
         }
-        if (contE1 + contE2 == 0)
+        if (contE1 + contE2 == 0) //Condicional para activar el mensaje de Ganaste.
         {
             win.enabled = true;
-            Time.timeScale = 0;
+        
         }
-     
+      
     }
-    public void spawnCharger()
+    public void spawnCharger() //Constructor de los cargadores.
     {
         cargadorClone = Instantiate(cargador, transform.position, Quaternion.identity);
         Vector3 posCar = new Vector3();
@@ -103,7 +104,7 @@ public class Manager : MonoBehaviour {
         
     }
 
-    public void heroSpawn()
+    public void heroSpawn() //Constructor del jugador.
     {
         playerClone = Instantiate(Player, transform.position, Quaternion.identity);
         Camera.main.transform.SetParent(playerClone.transform, false);
@@ -116,15 +117,13 @@ public class Manager : MonoBehaviour {
         pos1.z = Random.Range(-20, 20);
         playerClone.transform.position = pos1;
 
-       
-
         playerClone.tag = "Player";
         playerClone.AddComponent<Player>();
         Rigidbody rgbdy1 = playerClone.AddComponent<Rigidbody>();
         rgbdy1.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
-    public void citizenSpawn()
+    public void citizenSpawn() //Constructor de los ciudadanos.
     {
         ciudadaClone = Instantiate(ciudada, transform.position, Quaternion.identity);
 
@@ -139,10 +138,10 @@ public class Manager : MonoBehaviour {
         Rigidbody rgbdy2 = ciudadaClone.AddComponent<Rigidbody>();
         rgbdy2.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
-        contCiu++;
+        contCiu++;//Variable para conteo de los ciudadanos.
     }
 
-    public void enemy1Spawn()
+    public void enemy1Spawn() //Constructor para el primer tipo de enemigo.
     {
         enemyOneClone = Instantiate(enemyOne, transform.position, Quaternion.identity);
 
@@ -157,9 +156,9 @@ public class Manager : MonoBehaviour {
         Rigidbody rgbdy3 = enemyOneClone.AddComponent<Rigidbody>();
         rgbdy3.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
-        contE1++;
+        contE1++; //Variable para el conteo de este tipo de enemigo.
     }
-    public void enemy2Spawn()
+    public void enemy2Spawn() //Constructor para el segundo tipo de enemigo.
     {
         GameObject enemyTwoClone;
         
@@ -175,6 +174,6 @@ public class Manager : MonoBehaviour {
         enemyTwoClone.AddComponent<Enemy2>();
         Rigidbody rgbdy4 = enemyTwoClone.AddComponent<Rigidbody>();
 
-        contE2++;
+        contE2++; //Variable para el conteo de este tipo de enemigo.
     }
 }

@@ -5,22 +5,23 @@ using UnityEngine;
 public sealed class Enemy1 : NPC
 {
 
-    FirstEnemyE enemyOne;
-    public float uniDist = 5.0f;
+    FirstEnemyE enemyOne; //Llamada a la estructura del primer enemigo.
+    public float uniDist = 5.0f; //Variable que guarda la distancia de persecucion.
 
     // Use this for initialization
-   void Start ()
+    void Start ()
     {
-        enemyOne.fEnemyHealth = 3;
-        StartCoroutine(MovimientoEnemy());
+        enemyOne.fEnemyHealth = 3; //Asignacion del total de vida del enemigo.
+        StartCoroutine(MovimientoEnemy()); //Inicializacion de la corrutina que controla los estados y la direccion de mov.
     }
 
 	// Update is called once per frame
 	void Update ()
     {
-        
+      
 
-        switch (estado)
+        switch (estado) //Switch para los estados del enemigo, asignacion del valor de la variable speed
+                        // y llamada al metodo de movimiento.
         {
             case behaviour.idle:
                 speed = 0;
@@ -38,7 +39,7 @@ public sealed class Enemy1 : NPC
                 break;
         }
 
-        buscar();
+        buscar(); //Llamada al metodo buscar;
 
         if (target)
         {
@@ -46,7 +47,7 @@ public sealed class Enemy1 : NPC
 
             float distanceToPlayer = myVector.magnitude;
 
-            if (distanceToPlayer < uniDist)
+            if (distanceToPlayer < uniDist) //Condicional para comenzar la persecucion.
             {
                 estado = behaviour.chasing;
                 transform.position += Vector3.Normalize(target.transform.position - transform.position) * speed * Time.deltaTime;
@@ -55,7 +56,7 @@ public sealed class Enemy1 : NPC
 
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision) //Metodo de colision para reducir la vida del enemigo.
     {
         if(collision.gameObject.tag == "Bullet")
         {
@@ -64,7 +65,7 @@ public sealed class Enemy1 : NPC
             if(enemyOne.fEnemyHealth == 0)
             {
                 Destroy(gameObject);
-                FindObjectOfType<Manager>().contE1--;
+                FindObjectOfType<Manager>().contE1--; //Acceso a la variable para el conteo de los enemigos.
             }
         }
     }
@@ -72,7 +73,7 @@ public sealed class Enemy1 : NPC
     public float distPlayer;
     public GameObject target;
 
-    void buscar()
+    void buscar() //Metodo para la busqueda de un tipo de objeto.
     {
         GameObject[] AllGameObjects = GameObject.FindObjectsOfType(typeof(GameObject)) as GameObject[];
         foreach (GameObject go in AllGameObjects)

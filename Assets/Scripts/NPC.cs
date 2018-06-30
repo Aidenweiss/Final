@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC : MonoBehaviour {
+public class NPC : MonoBehaviour
+{
 
-    public int dir;
-    public float speed;
+    public int dir; //Variable que guarda la direccion del mov de los npc.
+    public float speed; //variable que guarda la velocidad del mov de los npc.
 
-    public behaviour estado;
+    public behaviour estado; //variable que guarda los estados de los npc.
 
-    public IEnumerator MovimientoEnemy()
+    public IEnumerator MovimientoEnemy() //Corrutina que controla el estado y la dierccion del movimiento de los npc.
     {
         yield return new WaitForSeconds(2);
         estado = (behaviour)Random.Range(0, 2);
@@ -30,7 +31,7 @@ public class NPC : MonoBehaviour {
 		
 	}
 
-    public void Moving()
+    public void Moving() //Metodo para el movimiento de los npc.
     {
         switch (dir)
         {
@@ -51,4 +52,6 @@ public class NPC : MonoBehaviour {
                 break;
         }
     }
+
+  
 }

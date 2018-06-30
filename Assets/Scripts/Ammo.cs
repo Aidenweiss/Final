@@ -14,9 +14,11 @@ public class Ammo : MonoBehaviour
 	void Update () {
 		
 	}
+
     void OnCollisionEnter(Collision collision)
+    //Metodo de colision que desactiva los cargadores con los que choca el jugador.
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             gameObject.SetActive(false);
         }

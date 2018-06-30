@@ -13,45 +13,45 @@ public sealed class Citizen : NPC
     // Use this for initialization
     void Start ()
     {
-        speed = 1.7f;
-        citizen.talk = Random.Range(0, 5);
-        StartCoroutine(MovimientoEnemy());
+        speed = 1.7f; //Asignacion del valor a la variable velocidad.
+        citizen.talk = Random.Range(0, 5); //Randomizador que controla la info que devela cada ciudadano.
+        StartCoroutine(MovimientoEnemy()); //Inicializacion de la corrutina de movimiento.
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
         
-        Moving();
+        Moving();//Llamada al metodo de movimiento.
 
-        buscar();//llamando el metodo de busqueda
-                 // y le digo que al que el target se alege de la pocicion del zombie mas cercano 
+        buscar();//Llamada al metodo de busqueda
+                 
         if (target)
         {
             Vector3 myVector = target.transform.position - transform.position;
 
             float distanceToPlayer = myVector.magnitude;
 
-            if (distanceToPlayer < uniDist)
+            if (distanceToPlayer < uniDist) //Condicional para huir de los persecutores.
             {
                 transform.position += Vector3.Normalize(target.transform.position + transform.position) * citizen.ciudSpeed * Time.deltaTime;
             }
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision) //Metodo de colision para corrupcion de los ciudadanos.
     {
     if (collision.gameObject.tag == "Enemy1")
         {
 
-            FindObjectOfType<Manager>().enemy2Spawn();
+            FindObjectOfType<Manager>().enemy2Spawn(); //El bloque de codigo desactiva al ciudadano y spawnea un enemigo.
             gameObject.SetActive(false);
             FindObjectOfType<Manager>().contCiu--;
         }    
     }
     
 
-    void buscar()
+    void buscar() //Metodo para buscar a los enemigos.
     {
         GameObject[] AllGameObjects = GameObject.FindObjectsOfType(typeof(GameObject)) as GameObject[];
         foreach (GameObject go in AllGameObjects)

@@ -16,6 +16,7 @@ public class FPSAim : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+   
 
         giro(); //Llamada a la clase giro.
         if (invertedMouse) //Condicional del booleano para invertir los controles de la camara en Y.
